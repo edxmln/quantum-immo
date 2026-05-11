@@ -4,8 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quantum Immo — Scanner</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<title>Quantum Immo</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -54,7 +53,7 @@ select:focus,input:focus{outline:none;border-color:#00ff8755;}
 .mlbl{font-size:8px;color:#3a3a3a;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
 .mval{font-size:15px;font-weight:700;color:#00ff87;}
 .links{display:flex;gap:7px;margin-bottom:12px;}
-.lbtn{flex:1;background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:8px;text-align:center;color:#00c8ff;font-size:9px;text-decoration:none;letter-spacing:.1em;display:block;}
+.lbtn{flex:1;background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:8px;text-align:center;color:#00c8ff;font-size:9px;text-decoration:none;letter-spacing:.1em;display:block;cursor:pointer;}
 .lbtn.gold{color:#ffb400;}
 .jbox{background:#111118;border:1px solid #1e1e2e;border-radius:5px;padding:12px;margin-bottom:10px;}
 .jgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px;}
@@ -63,15 +62,12 @@ select:focus,input:focus{outline:none;border-color:#00ff8755;}
 .abtn-p{background:linear-gradient(135deg,#00ff87,#00c8ff);color:#000;}
 .abtn-s{background:transparent;border:1px solid #1e1e2e;color:#555;}
 .abtn:hover:not(:disabled){opacity:.85;}
-.abtn:disabled{opacity:.35;cursor:not-allowed;}
-.ares{border-top:1px solid #1e1e2e;padding-top:12px;margin-top:4px;}
 .atitle{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
 .atext{font-size:10px;color:#666;line-height:1.8;}
 .aitem{font-size:10px;color:#666;line-height:1.8;}
 .lettre{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:12px;font-size:10px;line-height:1.9;color:#777;white-space:pre-wrap;margin-bottom:8px;}
 .cbtn{background:transparent;border:1px solid #1e1e2e;color:#555;border-radius:3px;padding:5px 10px;font-size:9px;cursor:pointer;font-family:inherit;margin-right:6px;}
 .sbtn{background:transparent;border:1px solid #00ff8733;color:#00ff87;border-radius:3px;padding:5px 10px;font-size:9px;cursor:pointer;font-family:inherit;}
-.cbtn:hover{color:#ddd;}.sbtn:hover{background:#00ff8710;}
 .vbuy{background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.2);color:#00ff87;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
 .vwatch{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.2);color:#ffb400;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
 .vpass{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);color:#ff4444;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
@@ -85,22 +81,20 @@ select:focus,input:focus{outline:none;border-color:#00ff8755;}
 details summary{font-size:10px;color:#444;cursor:pointer;padding:4px 0;user-select:none;}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid #1e1e2e;border-top:2px solid #00ff87;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px;}
 @keyframes sp{to{transform:rotate(360deg)}}
-.sv-frame{width:100%;height:160px;border:none;border-radius:4px;margin-bottom:10px;display:block;}
+#sv-box{width:100%;height:150px;border-radius:4px;margin-bottom:10px;overflow:hidden;background:#111118;}
+#sv-box img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
+.sv-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;cursor:pointer;flex-direction:column;gap:6px;}
 </style>
 </head>
 <body>
 <div id="app">
   <div id="nav">
-    <div>
-      <div class="logo">◈ QUANTUM IMMO</div>
-      <div class="logo-sub">SCANNER OFF-MARKET · QUÉBEC</div>
-    </div>
+    <div><div class="logo">◈ QUANTUM IMMO</div><div class="logo-sub">SCANNER OFF-MARKET · QUÉBEC</div></div>
     <div class="tabs">
       <button class="tb on" onclick="goTab('scanner')">Scanner</button>
       <button class="tb" onclick="goTab('prospects')">Prospects <span id="pcnt"></span></button>
     </div>
   </div>
-
   <div id="scanner">
     <div id="left">
       <div id="search">
@@ -122,97 +116,40 @@ details summary{font-size:10px;color:#444;cursor:pointer;padding:4px 0;user-sele
         </select>
         <div class="row2">
           <div><label class="lbl" style="margin-top:8px">Rayon</label>
-            <select id="radius-sel">
-              <option value="800">800m</option>
-              <option value="1500" selected>1.5 km</option>
-              <option value="2500">2.5 km</option>
-              <option value="4000">4 km</option>
-            </select>
+            <select id="radius-sel"><option value="800">800m</option><option value="1500" selected>1.5 km</option><option value="2500">2.5 km</option><option value="4000">4 km</option></select>
           </div>
           <div><label class="lbl" style="margin-top:8px">Min. étages</label>
-            <select id="floors-sel">
-              <option value="2" selected>2+</option>
-              <option value="3">3+</option>
-              <option value="4">4+</option>
-            </select>
+            <select id="floors-sel"><option value="2" selected>2+</option><option value="3">3+</option><option value="4">4+</option></select>
           </div>
         </div>
         <button class="scan-btn" id="sbtn" onclick="scan()">▶ Scanner la zone</button>
       </div>
       <div id="log">En attente du scan...</div>
-      <div id="blist">
-        <div class="empty-state">
-          <div class="empty-icon">🗺️</div>
-          <div class="empty-t">Sélectionne une ville</div>
-          <div class="empty-s">et clique Scanner</div>
-        </div>
-      </div>
+      <div id="blist"><div class="empty-state"><div class="empty-icon">🗺️</div><div class="empty-t">Sélectionne une ville</div><div class="empty-s">et clique Scanner</div></div></div>
     </div>
-
     <div id="map-wrap"><div id="map"></div></div>
-
-    <div id="right">
-      <div id="rpanel">
-        <div class="empty-state">
-          <div class="empty-icon">🏢</div>
-          <div class="empty-t">Clique sur un immeuble</div>
-          <div class="empty-s">dans la liste ou sur la carte</div>
-        </div>
-      </div>
-    </div>
+    <div id="right"><div id="rpanel"><div class="empty-state"><div class="empty-icon">🏢</div><div class="empty-t">Clique sur un immeuble</div><div class="empty-s">dans la liste ou sur la carte</div></div></div></div>
   </div>
-
   <div id="prospects"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-const CITIES = {
-  granby:        {lat:45.3986,lon:-72.7311,name:'Granby'},
-  sherbrooke:    {lat:45.4042,lon:-71.8929,name:'Sherbrooke'},
-  montreal:      {lat:45.5231,lon:-73.5826,name:'Montréal'},
-  laval:         {lat:45.6066,lon:-73.7124,name:'Laval'},
-  longueuil:     {lat:45.5312,lon:-73.5185,name:'Longueuil'},
-  brossard:      {lat:45.4584,lon:-73.4706,name:'Brossard'},
-  sjsr:          {lat:45.3069,lon:-73.2632,name:'Saint-Jean-sur-Richelieu'},
-  drummondville: {lat:45.8836,lon:-72.4832,name:'Drummondville'},
-  troisrivieres: {lat:46.3432,lon:-72.5459,name:'Trois-Rivières'},
-  stHyacinthe:   {lat:45.6295,lon:-72.9597,name:'Saint-Hyacinthe'},
-  victoriaville: {lat:46.0567,lon:-71.9742,name:'Victoriaville'},
-  rimouski:      {lat:48.4516,lon:-68.5318,name:'Rimouski'},
-  quebec:        {lat:46.8139,lon:-71.2082,name:'Québec'},
+const KEY='AIzaSyCv2KXrBTHI9Ir5VYc6jqhkqZZprMamyoE';
+const CITIES={granby:{lat:45.3986,lon:-72.7311},sherbrooke:{lat:45.4042,lon:-71.8929},montreal:{lat:45.5231,lon:-73.5826},laval:{lat:45.6066,lon:-73.7124},longueuil:{lat:45.5312,lon:-73.5185},brossard:{lat:45.4584,lon:-73.4706},sjsr:{lat:45.3069,lon:-73.2632},drummondville:{lat:45.8836,lon:-72.4832},troisrivieres:{lat:46.3432,lon:-72.5459},stHyacinthe:{lat:45.6295,lon:-72.9597},victoriaville:{lat:46.0567,lon:-71.9742},rimouski:{lat:48.4516,lon:-68.5318},quebec:{lat:46.8139,lon:-71.2082}};
+let gmap,buildings=[],selB=null,prospects=[],markers=[];
+
+window.initMap=function(){
+  gmap=new google.maps.Map(document.getElementById('map'),{
+    center:{lat:45.3986,lng:-72.7311},zoom:14,
+    styles:[{elementType:'geometry',stylers:[{color:'#0a0a0f'}]},{elementType:'labels.text.fill',stylers:[{color:'#555'}]},{elementType:'labels.text.stroke',stylers:[{color:'#0a0a0f'}]},{featureType:'road',elementType:'geometry',stylers:[{color:'#1a1a28'}]},{featureType:'water',elementType:'geometry',stylers:[{color:'#111118'}]},{featureType:'poi',stylers:[{visibility:'off'}]},{featureType:'transit',stylers:[{visibility:'off'}]}],
+    mapTypeControl:false,streetViewControl:false,fullscreenControl:false
+  });
 };
 
-let map, mlayer, buildings=[], selB=null, prospects=[];
-
-function initMap(lat,lon){
-  if(!map){
-    map=L.map('map',{zoomControl:true,attributionControl:false}).setView([lat,lon],14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19,subdomains:'abcd'}).addTo(map);
-    mlayer=L.layerGroup().addTo(map);
-  } else { map.setView([lat,lon],14); }
-}
-
-function onCity(){
-  const v=document.getElementById('city-sel').value;
-  if(CITIES[v]) initMap(CITIES[v].lat,CITIES[v].lon);
-}
-
-function scoreB(b){
-  const t=b.tags||{},l=parseInt(t['building:levels'])||0,y=parseInt(t.start_date||t['construction:date'])||0;
-  let s=0;
-  if(t.building==='apartments') s+=28; else if(t.building==='residential') s+=16; else if(t.building) s+=8;
-  if(l>=5) s+=28; else if(l>=4) s+=22; else if(l>=3) s+=15; else if(l>=2) s+=8;
-  if(y>0&&y<1975) s+=28; else if(y>0&&y<1990) s+=18; else if(y>0&&y<2005) s+=8;
-  if(!t.name) s+=8; if(t['addr:housenumber']) s+=8;
-  return Math.min(Math.max(s,5),100);
-}
+function onCity(){const v=document.getElementById('city-sel').value;const c=CITIES[v];if(c&&gmap){gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(14);}}
+function scoreB(b){const t=b.tags||{},l=parseInt(t['building:levels'])||0,y=parseInt(t.start_date||t['construction:date'])||0;let s=0;if(t.building==='apartments')s+=28;else if(t.building==='residential')s+=16;else if(t.building)s+=8;if(l>=5)s+=28;else if(l>=4)s+=22;else if(l>=3)s+=15;else if(l>=2)s+=8;if(y>0&&y<1975)s+=28;else if(y>0&&y<1990)s+=18;else if(y>0&&y<2005)s+=8;if(!t.name)s+=8;if(t['addr:housenumber'])s+=8;return Math.min(Math.max(s,5),100);}
 const scol=s=>s>=65?'#00ff87':s>=40?'#ffb400':'#666';
-const schip=s=>s>=65
-  ?`<span class="chip" style="background:rgba(0,255,135,.1);color:#00ff87;border:1px solid rgba(0,255,135,.2)">Fort</span>`
-  :s>=40?`<span class="chip" style="background:rgba(255,180,0,.1);color:#ffb400;border:1px solid rgba(255,180,0,.2)">Moyen</span>`
-  :`<span class="chip" style="background:rgba(80,80,80,.1);color:#555;border:1px solid #222">Faible</span>`;
-
+const schip=s=>s>=65?`<span class="chip" style="background:rgba(0,255,135,.1);color:#00ff87;border:1px solid rgba(0,255,135,.2)">Fort</span>`:s>=40?`<span class="chip" style="background:rgba(255,180,0,.1);color:#ffb400;border:1px solid rgba(255,180,0,.2)">Moyen</span>`:`<span class="chip" style="background:rgba(80,80,80,.1);color:#555;border:1px solid #222">Faible</span>`;
 function baddr(b){const t=b.tags||{};const n=t['addr:housenumber']||'',s=t['addr:street']||'';return(n&&s)?`${n} ${s}`:s||`Bâtiment #${b.id}`;}
 function bmeta(b){const t=b.tags||{},p=[];if(t['building:levels'])p.push(`${t['building:levels']} étages`);if(t.start_date)p.push(t.start_date);return p.join(' · ')||t.building||'Bâtiment';}
 const fmt=n=>n==null?'—':Math.round(n).toLocaleString('fr-CA');
@@ -220,40 +157,29 @@ const fmtP=n=>n==null?'—':n.toFixed(2)+'%';
 
 async function scan(){
   const sel=document.getElementById('city-sel').value;
-  const c=CITIES[sel]; if(!c) return;
+  const c=CITIES[sel];if(!c)return;
   const radius=document.getElementById('radius-sel').value;
   const minF=document.getElementById('floors-sel').value;
   document.getElementById('sbtn').disabled=true;
-  log('⟳ Connexion à OpenStreetMap...','info');
-  initMap(c.lat,c.lon);
-  mlayer.clearLayers(); buildings=[]; renderList();
-
+  log('⟳ Scan en cours — 15 à 30 sec...','info');
+  gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(14);
+  markers.forEach(m=>m.setMap(null));markers=[];buildings=[];renderList();
   const query=`[out:json][timeout:35];(way["building"="apartments"](around:${radius},${c.lat},${c.lon});way["building"="residential"]["building:levels"~"^[${minF}-9]$|^[1-9][0-9]$"](around:${radius},${c.lat},${c.lon});way["building:levels"~"^[${minF}-9]$|^[1-9][0-9]$"]["building"~"apartments|residential|yes"](around:${radius},${c.lat},${c.lon}););out center tags 200;`;
-
-  try{
-    log('⟳ Scan en cours — 10 à 30 secondes...','info');
-   const servers=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
-    let r, lastErr;
-    for(const srv of servers){
-      try{ r=await fetch(`${srv}?data=${encodeURIComponent(query)}`); if(r.ok) break; }catch(e){ lastErr=e; }
-    }
-    if(!r||!r.ok) throw new Error('Tous les serveurs inaccessibles');    if(!r.ok) throw new Error(`HTTP ${r.status}`);
-    const d=await r.json();
-    buildings=(d.elements||[]).filter(b=>b.center||(b.lat&&b.lon)).map(b=>({...b,_score:scoreB(b)})).sort((a,b)=>b._score-a._score).slice(0,150);
-    if(!buildings.length){log('Aucun immeuble trouvé — essaie un rayon plus grand','err');document.getElementById('sbtn').disabled=false;return;}
-    buildings.forEach((b,i)=>{
-      const lat=b.center?b.center.lat:b.lat,lon=b.center?b.center.lon:b.lon;
-      const col=scol(b._score);
-      const icon=L.divIcon({className:'',html:`<div style="width:${b._score>=65?14:10}px;height:${b._score>=65?14:10}px;border-radius:50%;background:${col};border:2px solid rgba(0,0,0,.4);cursor:pointer;transition:transform .1s;" onmouseover="this.style.transform='scale(1.5)'" onmouseout="this.style.transform='scale(1)'"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
-      const m=L.marker([lat,lon],{icon}).addTo(mlayer);
-      m.on('click',()=>selectB(b));
-    });
-    renderList();
-    const forts=buildings.filter(b=>b._score>=65).length;
-    log(`✓ ${buildings.length} immeubles · ${forts} forts signaux`,'ok');
-  }catch(e){
-    log(`✗ Erreur: ${e.message}`,'err');
-  }
+  const servers=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
+  let data=null;
+  for(const srv of servers){try{const r=await fetch(`${srv}?data=${encodeURIComponent(query)}`);if(r.ok){data=await r.json();break;}}catch(e){continue;}}
+  if(!data){log('✗ Erreur connexion — réessaie','err');document.getElementById('sbtn').disabled=false;return;}
+  buildings=(data.elements||[]).filter(b=>b.center||(b.lat&&b.lon)).map(b=>({...b,_score:scoreB(b)})).sort((a,b)=>b._score-a._score).slice(0,150);
+  if(!buildings.length){log('Aucun immeuble — essaie rayon plus grand','err');document.getElementById('sbtn').disabled=false;return;}
+  buildings.forEach((b,i)=>{
+    const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
+    const col=scol(b._score);
+    const m=new google.maps.Marker({position:{lat,lng},map:gmap,icon:{path:google.maps.SymbolPath.CIRCLE,scale:b._score>=65?9:6,fillColor:col,fillOpacity:.9,strokeColor:'#000',strokeWeight:1},title:baddr(b)});
+    m.addListener('click',()=>selectB(b));
+    markers.push(m);
+  });
+  renderList();
+  log(`✓ ${buildings.length} immeubles · ${buildings.filter(b=>b._score>=65).length} forts signaux`,'ok');
   document.getElementById('sbtn').disabled=false;
 }
 
@@ -266,157 +192,108 @@ function renderList(){
 }
 
 function selectB(b){
-  selB=b; renderList();
-  const lat=b.center?b.center.lat:b.lat,lon=b.center?b.center.lon:b.lon;
-  if(map) map.setView([lat,lon],16);
+  selB=b;renderList();
+  const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
+  gmap.setCenter({lat,lng});gmap.setZoom(17);
   renderRight(b);
 }
 
 function renderRight(b){
   const addr=baddr(b),meta=bmeta(b),t=b.tags||{};
-  const blat=b.center?b.center.lat:b.lat,blon=b.center?b.center.lon:b.lon;
-  const gmUrl=`https://www.google.com/maps?q=${blat},${blon}&layer=c`;
+  const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
+  const svImg=`https://maps.googleapis.com/maps/api/streetview?size=640x150&location=${lat},${lng}&fov=90&key=${KEY}`;
+  const svLink=`https://www.google.com/maps?q=${lat},${lng}&layer=c`;
   const jlrUrl=`https://www.jlr.ca/fr/recherche?q=${encodeURIComponent(addr)}`;
-  const svUrl=`https://maps.googleapis.com/maps/api/streetview?size=640x160&location=${blat},${blon}&key=AIzaSyCv2KXrBTHI9Ir5VYc6jqhkqZZprMamyoE;
-
-  document.getElementById('rpanel').innerHTML=`
-    <div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
-        <div style="flex:1;margin-right:8px;">
-          <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">${addr}</div>
-          <div style="font-size:9px;color:#444;">${meta}</div>
-        </div>
-        <div style="text-align:right;flex-shrink:0;">
-          ${b._score>=65?'<div class="vbuy">FORT</div>':b._score>=40?'<div class="vwatch">MOYEN</div>':'<div style="font-size:9px;color:#333">FAIBLE</div>'}
-          <div style="font-size:9px;color:#333;margin-top:4px;">Score <span style="color:#00ff87">${b._score}</span>/100</div>
-        </div>
+  document.getElementById('rpanel').innerHTML=`<div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div style="flex:1;margin-right:8px;"><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">${addr}</div><div style="font-size:9px;color:#444;">${meta}</div></div>
+      <div style="text-align:right;flex-shrink:0;">${b._score>=65?'<div class="vbuy">FORT</div>':b._score>=40?'<div class="vwatch">MOYEN</div>':'<div style="font-size:9px;color:#333">FAIBLE</div>'}<div style="font-size:9px;color:#333;margin-top:4px;">Score <span style="color:#00ff87">${b._score}</span>/100</div></div>
+    </div>
+    <div id="sv-box"><img src="${svImg}" onclick="window.open('${svLink}','_blank')" onerror="this.parentNode.innerHTML='<div class=sv-ph onclick=window.open(\\\"${svLink}\\\",\\\"_blank\\\")>📷 Pas de Street View disponible<br><span style=font-size:9px;color:#2a2a2a>Cliquer pour ouvrir Google Maps</span></div>'"></div>
+    <div class="metrics">
+      <div class="met"><div class="mlbl">Étages</div><div class="mval">${t['building:levels']||'?'}</div></div>
+      <div class="met"><div class="mlbl">Construction</div><div class="mval" style="font-size:12px;">${t.start_date||'?'}</div></div>
+      <div class="met"><div class="mlbl">Type</div><div class="mval" style="font-size:11px;color:#00c8ff;">${t.building||'?'}</div></div>
+      <div class="met"><div class="mlbl">Score</div><div class="mval" style="color:${scol(b._score)}">${b._score}%</div></div>
+    </div>
+    <div class="links"><a href="${svLink}" target="_blank" class="lbtn">📷 Street View</a><a href="${jlrUrl}" target="_blank" class="lbtn gold">🔍 JLR</a></div>
+    <div class="jbox">
+      <div class="pt">Données JLR — 2 minutes</div>
+      <div class="jgrid">
+        <div class="fg"><label>Prix demandé ($)</label><input type="number" id="j-price" placeholder="ex: 850000"></div>
+        <div class="fg"><label>Éval. municipale ($)</label><input type="number" id="j-eval" placeholder="ex: 680000"></div>
+        <div class="fg"><label>Nombre de portes</label><input type="number" id="j-doors" placeholder="ex: 6"></div>
+        <div class="fg"><label>Revenu brut annuel ($)</label><input type="number" id="j-rev" placeholder="ex: 72000"></div>
+        <div class="fg"><label>Nom propriétaire</label><input type="text" id="j-owner" placeholder="ex: Jean Tremblay"></div>
+        <div class="fg"><label>Dernière transaction</label><input type="text" id="j-sale" placeholder="ex: 2019 · 620K$"></div>
       </div>
-
-      <div id="sv-container" style="background:#111118;border:1px solid #1e1e2e;border-radius:4px;height:150px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:10px;color:#333;cursor:pointer;" onclick="openSV(${blat},${blon})">
-        📷 Cliquer pour Street View
-      </div>
-
-      <div class="metrics">
-        <div class="met"><div class="mlbl">Étages</div><div class="mval">${t['building:levels']||'?'}</div></div>
-        <div class="met"><div class="mlbl">Construction</div><div class="mval" style="font-size:12px;">${t.start_date||'?'}</div></div>
-        <div class="met"><div class="mlbl">Type</div><div class="mval" style="font-size:11px;color:#00c8ff;">${t.building||'?'}</div></div>
-        <div class="met"><div class="mlbl">Coords</div><div class="mval" style="font-size:9px;color:#444;">${blat.toFixed(4)}, ${blon.toFixed(4)}</div></div>
-      </div>
-
-      <div class="links">
-        <a href="${gmUrl}" target="_blank" class="lbtn">📷 Street View</a>
-        <a href="${jlrUrl}" target="_blank" class="lbtn gold">🔍 JLR</a>
-      </div>
-
-      <div class="jbox">
-        <div class="pt">Données JLR — 2 minutes</div>
-        <div class="jgrid">
-          <div class="fg"><label>Prix demandé ($)</label><input type="number" id="j-price" placeholder="ex: 850000"></div>
-          <div class="fg"><label>Éval. municipale ($)</label><input type="number" id="j-eval" placeholder="ex: 680000"></div>
-          <div class="fg"><label>Nombre de portes</label><input type="number" id="j-doors" placeholder="ex: 6"></div>
-          <div class="fg"><label>Revenu brut annuel ($)</label><input type="number" id="j-rev" placeholder="ex: 72000"></div>
-          <div class="fg"><label>Nom propriétaire</label><input type="text" id="j-owner" placeholder="ex: Jean Tremblay"></div>
-          <div class="fg"><label>Dernière transaction</label><input type="text" id="j-sale" placeholder="ex: 2019 · 620K$"></div>
-        </div>
-        <div class="fg"><label>Observations</label><input type="text" id="j-notes" placeholder="ex: 2 logements vacants, toiture à refaire..."></div>
-      </div>
-
-      <button class="abtn abtn-p" onclick="doAnalyze()">📊 Analyser le deal →</button>
-      <button class="abtn abtn-s" onclick="doLettre()">✉ Générer lettre d'approche</button>
-      <div id="ares"></div>
-    </div>`;
-}
-
-function openSV(lat,lon){
-  window.open(`https://www.google.com/maps?q=${lat},${lon}&layer=c`,'_blank');
+      <div class="fg"><label>Observations</label><input type="text" id="j-notes" placeholder="ex: 2 logements vacants..."></div>
+    </div>
+    <button class="abtn abtn-p" onclick="doAnalyze()">📊 Analyser le deal →</button>
+    <button class="abtn abtn-s" onclick="doLettre()">✉ Générer lettre d'approche</button>
+    <div id="ares"></div>
+  </div>`;
 }
 
 async function doAnalyze(){
-  if(!selB) return;
+  if(!selB)return;
   const g=id=>document.getElementById(id)?.value||'';
   const addr=baddr(selB),t=selB.tags||{};
   const price=g('j-price'),eval_=g('j-eval'),doors=g('j-doors'),rev=g('j-rev'),owner=g('j-owner'),sale=g('j-sale'),notes=g('j-notes');
   const noi=rev?Math.round(parseFloat(rev)*0.65):null;
-  document.getElementById('ares').innerHTML=`<div style="text-align:center;padding:20px;"><span class="spin"></span><span style="font-size:10px;color:#444;letter-spacing:.1em;">Analyse IA...</span></div>`;
-  const prompt=`Analyste immobilier expert Québec. JSON uniquement, sans texte ni backticks.
-
-Adresse: ${addr}
-OSM: ${t['building:levels']||'?'} étages · ${t.start_date||'?'} · ${t.building||'?'}
-Prix: ${price||'?'}$  Éval: ${eval_||'?'}$  Portes: ${doors||'?'}
-Revenu brut: ${rev||'?'}$/an  NOI est.: ${noi||'?'}$
-Dernière vente: ${sale||'?'}  Proprio: ${owner||'?'}
-Notes: ${notes||'aucune'}
-
-{"verdict":"ACHETER"|"SURVEILLER"|"PASSER","score":0-100,"prixParPorte":number|null,"tauxCap":number|null,"noi":number|null,"valeurRevenu":number|null,"ecart":number|null,"synthese":"string","forces":["",""],"risques":["",""],"optimisations":["","",""],"schl":"string","jlr":"string"}`;
+  document.getElementById('ares').innerHTML=`<div style="text-align:center;padding:20px;"><span class="spin"></span><span style="font-size:10px;color:#444;">Analyse IA...</span></div>`;
+  const prompt=`Analyste immobilier expert Québec. JSON uniquement sans texte ni backticks.\nAdresse: ${addr}\nOSM: ${t['building:levels']||'?'} étages · ${t.start_date||'?'} · ${t.building||'?'}\nPrix: ${price||'?'}$ Éval: ${eval_||'?'}$ Portes: ${doors||'?'}\nRevenu brut: ${rev||'?'}$/an NOI: ${noi||'?'}$\nDernière vente: ${sale||'?'} Proprio: ${owner||'?'}\nNotes: ${notes||'aucune'}\n{"verdict":"ACHETER"|"SURVEILLER"|"PASSER","score":0-100,"prixParPorte":number|null,"tauxCap":number|null,"noi":number|null,"valeurRevenu":number|null,"ecart":number|null,"synthese":"string","forces":["",""],"risques":["",""],"optimisations":["","",""],"schl":"string","jlr":"string"}`;
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
     const txt=d.content?.map(i=>i.text||'').join('')||'';
     const res=JSON.parse(txt.replace(/```json|```/g,'').trim());
-    selB._analysis=res; selB._jlr={price,eval_,doors,rev,owner,sale,notes};
+    selB._analysis=res;selB._jlr={price,eval_,doors,rev,owner,sale,notes};
     showAnalysis(res);
   }catch(e){document.getElementById('ares').innerHTML=`<div style="color:#ff6666;font-size:10px;padding:10px;">Erreur — réessaie</div>`;}
 }
 
 function showAnalysis(r){
   const vc=r.verdict==='ACHETER'?'vbuy':r.verdict==='PASSER'?'vpass':'vwatch';
-  document.getElementById('ares').innerHTML=`
-    <div class="ares">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-        <div class="${vc}">${r.verdict}</div>
-        <div style="font-size:9px;color:#333;">Score <span style="color:#00ff87">${r.score}</span>/100</div>
-      </div>
-      <div class="metrics">
-        ${r.prixParPorte!=null?`<div class="met"><div class="mlbl">Prix/porte</div><div class="mval" style="font-size:13px;">${fmt(r.prixParPorte)}$</div></div>`:''}
-        ${r.tauxCap!=null?`<div class="met"><div class="mlbl">Cap rate</div><div class="mval" style="color:${r.tauxCap>=5.5?'#00ff87':r.tauxCap>=4.5?'#ffb400':'#ff4444'}">${fmtP(r.tauxCap)}</div></div>`:''}
-        ${r.noi!=null?`<div class="met"><div class="mlbl">NOI</div><div class="mval" style="color:#00c8ff;font-size:12px;">${fmt(r.noi)}$</div></div>`:''}
-        ${r.ecart!=null?`<div class="met"><div class="mlbl">Écart valeur</div><div class="mval" style="color:${r.ecart>0?'#00ff87':'#ff4444'};font-size:12px;">${r.ecart>0?'+':''}${fmt(r.ecart)}$</div></div>`:''}
-      </div>
-      <div style="margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">Synthèse</div><div class="atext">${r.synthese}</div></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-        <div><div class="atitle" style="color:#00ff87;">Forces</div>${(r.forces||[]).map(f=>`<div class="aitem"><span style="color:#00ff87">↑ </span>${f}</div>`).join('')}</div>
-        <div><div class="atitle" style="color:#ff4444;">Risques</div>${(r.risques||[]).map(f=>`<div class="aitem"><span style="color:#ff4444">⚠ </span>${f}</div>`).join('')}</div>
-      </div>
-      <div style="margin-bottom:10px;"><div class="atitle" style="color:#ffb400;">Optimisations</div>${(r.optimisations||[]).map(o=>`<div class="aitem"><span style="color:#ffb400">→ </span>${o}</div>`).join('')}</div>
-      ${r.schl?`<div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">SCHL</div><div style="font-size:9px;color:#555;line-height:1.7;">${r.schl}</div></div>`:''}
-      <div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#444;">JLR</div><div style="font-size:9px;color:#444;line-height:1.7;">${r.jlr}</div></div>
-      <button class="abtn abtn-p" onclick="doLettre()">✉ Générer lettre →</button>
-    </div>`;
+  document.getElementById('ares').innerHTML=`<div style="border-top:1px solid #1e1e2e;padding-top:12px;margin-top:4px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div class="${vc}">${r.verdict}</div><div style="font-size:9px;color:#333;">Score <span style="color:#00ff87">${r.score}</span>/100</div></div>
+    <div class="metrics">${r.prixParPorte!=null?`<div class="met"><div class="mlbl">Prix/porte</div><div class="mval" style="font-size:13px;">${fmt(r.prixParPorte)}$</div></div>`:''} ${r.tauxCap!=null?`<div class="met"><div class="mlbl">Cap rate</div><div class="mval" style="color:${r.tauxCap>=5.5?'#00ff87':r.tauxCap>=4.5?'#ffb400':'#ff4444'}">${fmtP(r.tauxCap)}</div></div>`:''} ${r.noi!=null?`<div class="met"><div class="mlbl">NOI</div><div class="mval" style="color:#00c8ff;font-size:12px;">${fmt(r.noi)}$</div></div>`:''} ${r.ecart!=null?`<div class="met"><div class="mlbl">Écart</div><div class="mval" style="color:${r.ecart>0?'#00ff87':'#ff4444'};font-size:12px;">${r.ecart>0?'+':''}${fmt(r.ecart)}$</div></div>`:''}</div>
+    <div style="margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">Synthèse</div><div class="atext">${r.synthese}</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+      <div><div class="atitle" style="color:#00ff87;">Forces</div>${(r.forces||[]).map(f=>`<div class="aitem"><span style="color:#00ff87">↑ </span>${f}</div>`).join('')}</div>
+      <div><div class="atitle" style="color:#ff4444;">Risques</div>${(r.risques||[]).map(f=>`<div class="aitem"><span style="color:#ff4444">⚠ </span>${f}</div>`).join('')}</div>
+    </div>
+    <div style="margin-bottom:10px;"><div class="atitle" style="color:#ffb400;">Optimisations</div>${(r.optimisations||[]).map(o=>`<div class="aitem"><span style="color:#ffb400">→ </span>${o}</div>`).join('')}</div>
+    ${r.schl?`<div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">SCHL</div><div style="font-size:9px;color:#555;line-height:1.7;">${r.schl}</div></div>`:''}
+    <div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#444;">JLR</div><div style="font-size:9px;color:#444;line-height:1.7;">${r.jlr}</div></div>
+    <button class="abtn abtn-p" onclick="doLettre()">✉ Générer lettre →</button>
+  </div>`;
 }
 
 async function doLettre(){
-  if(!selB) return;
+  if(!selB)return;
   const g=id=>document.getElementById(id)?.value||'';
   const addr=baddr(selB),t=selB.tags||{};
   const owner=g('j-owner')||selB._jlr?.owner||'';
   const doors=g('j-doors')||selB._jlr?.doors||'';
   const notes=g('j-notes')||selB._jlr?.notes||'';
+  const ex=document.getElementById('lsec');if(ex)ex.remove();
   document.getElementById('ares').insertAdjacentHTML('beforeend',`<div id="lsec"><div style="text-align:center;padding:14px;"><span class="spin"></span><span style="font-size:10px;color:#444;">Génération lettre...</span></div></div>`);
-  const prompt=`Investisseur immobilier professionnel québécois. UNIQUEMENT la lettre, rien d'autre.
-Adresse: ${addr}  Proprio: ${owner||'?'}
-Immeuble: ${t['building:levels']||'?'} étages ${doors?'· ~'+doors+' portes':''} · ${t.start_date||'?'}
-Notes: ${notes||'immeuble repéré lors d\'une analyse de secteur'}
-Règles: 150-200 mots · chaleureux et direct · ne pas mentionner problèmes · acheteur sérieux financement confirmé · invitation discrète · signature: Edgar · commence par "Bonjour${owner?' M./Mme '+owner.split(' ').slice(-1)[0]:''},\n\n"`;
+  const prompt=`Investisseur immobilier professionnel québécois. UNIQUEMENT la lettre, rien d'autre.\nAdresse: ${addr} Proprio: ${owner||'?'}\nImmeuble: ${t['building:levels']||'?'} étages ${doors?'~'+doors+' portes':''} · ${t.start_date||'?'}\nNotes: ${notes||'immeuble repéré lors analyse de secteur'}\nRègles: 150-200 mots · chaleureux direct · pas de problèmes · acheteur sérieux · invitation discrète · signature Edgar · commence par "Bonjour${owner?' M./Mme '+owner.split(' ').slice(-1)[0]:''},\n\n"`;
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
     const lettre=d.content?.map(i=>i.text||'').join('')||'';
     selB._lettre=lettre;
-    document.getElementById('lsec').innerHTML=`
-      <div style="border-top:1px solid #1e1e2e;padding-top:12px;margin-top:8px;">
-        <div class="atitle" style="color:#00c8ff;">✉ Lettre d'approche</div>
-        <div class="lettre" id="ltxt">${lettre}</div>
-        <button class="cbtn" onclick="navigator.clipboard.writeText(document.getElementById('ltxt').textContent)">Copier</button>
-        <button class="sbtn" onclick="saveP()">Sauvegarder prospect</button>
-      </div>`;
+    document.getElementById('lsec').innerHTML=`<div style="border-top:1px solid #1e1e2e;padding-top:12px;margin-top:8px;"><div class="atitle" style="color:#00c8ff;">✉ Lettre d'approche</div><div class="lettre" id="ltxt">${lettre}</div><button class="cbtn" onclick="navigator.clipboard.writeText(document.getElementById('ltxt').textContent)">Copier</button><button class="sbtn" onclick="saveP()">Sauvegarder prospect</button></div>`;
   }catch(e){document.getElementById('lsec').innerHTML=`<div style="color:#ff6666;font-size:10px;padding:8px;">Erreur — réessaie</div>`;}
 }
 
 function saveP(){
-  if(!selB) return;
+  if(!selB)return;
   prospects=[{id:Date.now(),addr:baddr(selB),meta:bmeta(selB),score:selB._score,jlr:selB._jlr||{},analysis:selB._analysis||null,lettre:selB._lettre||'',date:new Date().toLocaleDateString('fr-CA')},...prospects];
   document.getElementById('pcnt').textContent=`(${prospects.length})`;
-  const b=document.querySelector('.sbtn'); if(b){b.textContent='✓ Sauvegardé!';b.style.color='#00ff87';}
+  const b=document.querySelector('.sbtn');if(b){b.textContent='✓ Sauvegardé!';b.style.color='#00ff87';}
 }
 
 function renderProspects(){
@@ -431,10 +308,9 @@ function goTab(t){
   document.querySelectorAll('.tb').forEach((b,i)=>b.classList.toggle('on',['scanner','prospects'][i]===t));
   document.getElementById('scanner').style.display=t==='scanner'?'flex':'none';
   document.getElementById('prospects').style.display=t==='prospects'?'block':'none';
-  if(t==='prospects') renderProspects();
+  if(t==='prospects')renderProspects();
 }
-
-window.onload=()=>initMap(45.3986,-72.7311);
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2KXrBTHI9Ir5VYc6jqhkqZZprMamyoE&callback=initMap" async defer></script>
 </body>
 </html>

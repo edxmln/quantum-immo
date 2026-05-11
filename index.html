@@ -232,12 +232,12 @@ async function scan(){
 
   try{
     log('⟳ Scan en cours — 10 à 30 secondes...','info');
-    const r=await fetch('https://overpass-api.de/api/interpreter',{
-      method:'POST',
-      body:'data='+encodeURIComponent(query),
-      headers:{'Content-Type':'application/x-www-form-urlencoded'}
-    });
-    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+   const servers=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
+    let r, lastErr;
+    for(const srv of servers){
+      try{ r=await fetch(`${srv}?data=${encodeURIComponent(query)}`); if(r.ok) break; }catch(e){ lastErr=e; }
+    }
+    if(!r||!r.ok) throw new Error('Tous les serveurs inaccessibles');    if(!r.ok) throw new Error(`HTTP ${r.status}`);
     const d=await r.json();
     buildings=(d.elements||[]).filter(b=>b.center||(b.lat&&b.lon)).map(b=>({...b,_score:scoreB(b)})).sort((a,b)=>b._score-a._score).slice(0,150);
     if(!buildings.length){log('Aucun immeuble trouvé — essaie un rayon plus grand','err');document.getElementById('sbtn').disabled=false;return;}

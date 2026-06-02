@@ -1,23 +1,51 @@
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 
-<!doctype html><html data-build-id="2650c0caed" data-git-hash="2650c0caedd30a3920befa98b6b71388bc2dbb53" data-build-timestamp="1780420693" data-version="1.0.0" data-env="" data-color-version="v2" lang="en" data-theme="claude" data-mode="light" class="h-screen antialiased scroll-smooth"><head data-ion-ip-country="CA"><link rel="preconnect" href="https://assets-proxy.anthropic.com" crossorigin><link rel="dns-prefetch" href="https://assets-proxy.anthropic.com"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title data-react-fallback>Claude</title><meta data-react-fallback name="description" content="Claude is Anthropic's AI, built for problem solvers. Tackle complex challenges, analyze data, write code, and think through your hardest work."><meta name="apple-itunes-app" content="app-id=6473753684"><meta property="og:type" content="website"><meta property="og:site_name" content="Claude"><meta property="og:image" content="https://claude.ai/images/claude_ogimage.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" type="image/svg+xml" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cd02a42d9-Vq_H3mgS.svg"><link rel="icon" type="image/png" sizes="32x32" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/ce67964e7-CAX1bqSh.png"><link rel="icon" type="image/png" sizes="16x16" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c03e51811-DebilQLI.png"><link rel="shortcut icon" href="/favicon.ico"><link rel="apple-touch-icon" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c129d018a-jJjJELY8.png"><link rel="apple-touch-startup-image" href="/images/claude_app_icon.png"><link rel="manifest" href="/manifest.json"><meta name="mobile-web-app-capable" content="yes"><link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-CFxw3nG7.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c66fc489e-C-BHYa_K.woff2" as="font" type="font/woff2" crossorigin><script nonce="uB1z/HGkzA2IVqSRoELvVw==">void 0===globalThis.process&&(globalThis.process={env:{},cwd:function(){return"/"}}),void 0===globalThis.global&&(globalThis.global=globalThis)</script><script type="application/ld+json" nonce="uB1z/HGkzA2IVqSRoELvVw==">{
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebSite",
-            "name": "Claude",
-            "alternateName": ["Claude.ai", "Claude by Anthropic"],
-            "url": "https://claude.com"
-          },
-          {
-            "@type": "Organization",
-            "name": "Anthropic",
-            "url": "https://www.anthropic.com",
-            "logo": "https://claude.ai/images/claude_ogimage.png",
-            "sameAs": [
-              "https://x.com/AnthropicAI",
-              "https://www.linkedin.com/company/anthropic",
-              "https://www.youtube.com/@anthropic-ai"
-            ]
+  const { lat, lng, radius } = req.query;
+  if (!lat || !lng) { res.status(400).json({ error: 'lat/lng required' }); return; }
+
+  const KEY = process.env.GOOGLE_API_KEY;
+  const r = parseInt(radius) || 2000;
+
+  try {
+    const allPlaces = [];
+    const seen = new Set();
+
+    const searches = [
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${r}&type=apartment&key=${KEY}`,
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${r}&keyword=immeuble+appartements&key=${KEY}`,
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${r}&keyword=logements+locatifs&key=${KEY}`,
+      `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=${r}&keyword=multiplex+plex&key=${KEY}`,
+    ];
+
+    for (const url of searches) {
+      try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        if (data.results) {
+          for (const p of data.results) {
+            if (!seen.has(p.place_id)) {
+              seen.add(p.place_id);
+              allPlaces.push({
+                id: p.place_id,
+                name: p.name,
+                address: p.vicinity,
+                lat: p.geometry.location.lat,
+                lng: p.geometry.location.lng,
+                types: p.types,
+                rating: p.rating,
+                userRatings: p.user_ratings_total || 0,
+              });
+            }
           }
-        ]
-      }</script><script nonce="uB1z/HGkzA2IVqSRoELvVw==">!function(){try{performance.mark?.("rq_cache:preload_start");const e="keyval-store",o="keyval",r="react-query-cache",t=new Promise(t=>{if(!window.indexedDB)return void t(void 0);const c=indexedDB.open(e);c.onupgradeneeded=()=>{c.transaction?.abort()},c.onerror=()=>t(void 0),c.onsuccess=()=>{const a=c.result;if(!a.objectStoreNames.contains(o))return a.close(),indexedDB.deleteDatabase(e),void t(void 0);try{const e=a.transaction(o,"readonly").objectStore(o).get(r);e.onerror=()=>{a.close(),t(void 0)},e.onsuccess=()=>{a.close(),window.__PRELOADED_IDB_CACHE_RESULT__=e.result,t(e.result)}}catch{a.close(),t(void 0)}}});window.__PRELOADED_IDB_CACHE__=t,performance.measure?.("rq_cache:preload_exec",{start:"rq_cache:preload_start"})}catch{}}()</script><link rel="preconnect" href="https://js.stripe.com"><link rel="preconnect" href="https://m.stripe.network"><script type="module" crossorigin src="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/index-Bumt38WK.js" nonce="uB1z/HGkzA2IVqSRoELvVw=="></script><link rel="stylesheet" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cec18ad9a-B9TvzFwS.css"><link rel="stylesheet" crossorigin href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c6a992d55-BFxbVS-O.css"></head><body class="bg-bg-100 text-text-100 font-ui min-h-screen"><div id="root"></div><script nonce="uB1z/HGkzA2IVqSRoELvVw==">(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.nonce='uB1z/HGkzA2IVqSRoELvVw==';d.innerHTML="window.__CF$cv$params={r:'a0592bfa2deea29c',t:'MTc4MDQzMTc2Mw=='};var a=document.createElement('script');a.nonce='uB1z/HGkzA2IVqSRoELvVw==';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+        }
+      } catch(e) { continue; }
+    }
+
+    res.status(200).json({ places: allPlaces, total: allPlaces.length });
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
+}

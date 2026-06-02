@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -18,78 +17,80 @@ html,body{height:100%;background:#0a0a0f;color:#e0e0e0;font-family:'IBM Plex Mon
 .tb{background:transparent;border:none;border-bottom:2px solid transparent;color:#444;padding:8px 14px;cursor:pointer;font-size:9px;letter-spacing:.15em;text-transform:uppercase;font-family:inherit;}
 .tb.on{border-bottom-color:#00ff87;color:#00ff87;}
 #scanner{display:flex;flex:1;overflow:hidden;}
-#left{width:300px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1a1a28;background:#0d0d15;}
-#search{padding:14px;border-bottom:1px solid #1a1a28;flex-shrink:0;}
-.lbl{font-size:8px;color:#444;letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:5px;}
-select,input{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:8px 10px;color:#e0e0e0;font-size:12px;font-family:inherit;width:100%;}
+#left{width:290px;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #1a1a28;background:#0d0d15;}
+#search{padding:12px;border-bottom:1px solid #1a1a28;flex-shrink:0;}
+.lbl{font-size:8px;color:#444;letter-spacing:.2em;text-transform:uppercase;display:block;margin-bottom:4px;}
+select,input{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:7px 9px;color:#e0e0e0;font-size:11px;font-family:inherit;width:100%;}
 select:focus,input:focus{outline:none;border-color:#00ff8755;}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
-.scan-btn{width:100%;margin-top:10px;background:linear-gradient(135deg,#00ff87,#00c8ff);border:none;border-radius:4px;padding:11px;color:#000;font-size:11px;font-family:inherit;font-weight:700;letter-spacing:.15em;cursor:pointer;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px;}
+.scan-btn{width:100%;margin-top:8px;background:linear-gradient(135deg,#00ff87,#00c8ff);border:none;border-radius:4px;padding:10px;color:#000;font-size:10px;font-family:inherit;font-weight:700;letter-spacing:.15em;cursor:pointer;}
 .scan-btn:disabled{opacity:.4;cursor:not-allowed;}
 .scan-btn:hover:not(:disabled){opacity:.85;}
-#log{padding:8px 14px;border-bottom:1px solid #1a1a28;font-size:9px;color:#555;letter-spacing:.1em;flex-shrink:0;min-height:28px;}
+#log{padding:6px 12px;border-bottom:1px solid #1a1a28;font-size:9px;color:#555;letter-spacing:.08em;flex-shrink:0;min-height:26px;}
 .l-ok{color:#00ff87;}.l-err{color:#ff4444;}.l-info{color:#00c8ff;}
-#blist{flex:1;overflow-y:auto;padding:8px;}
-.bcard{background:#111118;border:1px solid #1e1e2e;border-radius:5px;padding:10px 12px;margin-bottom:7px;cursor:pointer;transition:border-color .15s;}
+#progress-bar{height:2px;background:#1a1a28;flex-shrink:0;}
+#progress-fill{height:100%;background:linear-gradient(90deg,#00ff87,#00c8ff);width:0%;transition:width .3s;}
+#blist{flex:1;overflow-y:auto;padding:6px;}
+.bcard{background:#111118;border:1px solid #1e1e2e;border-radius:5px;padding:9px 11px;margin-bottom:6px;cursor:pointer;transition:border-color .15s;}
 .bcard:hover,.bcard.sel{border-color:#00ff8744;background:#0d150d;}
-.baddr{font-size:11px;font-weight:500;color:#ddd;margin-bottom:3px;}
-.bmeta{font-size:9px;color:#444;margin-bottom:6px;}
-.bscore{display:flex;align-items:center;gap:8px;}
-.bar{flex:1;height:3px;background:#1a1a28;border-radius:2px;overflow:hidden;}
+.baddr{font-size:11px;font-weight:500;color:#ddd;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bmeta{font-size:8px;color:#444;margin-bottom:5px;}
+.bscore{display:flex;align-items:center;gap:6px;}
+.bar{flex:1;height:2px;background:#1a1a28;border-radius:2px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:2px;}
-.sval{font-size:9px;font-weight:700;min-width:28px;text-align:right;}
-.chip{font-size:8px;padding:2px 6px;border-radius:3px;font-weight:700;}
+.sval{font-size:9px;font-weight:700;min-width:26px;text-align:right;}
+.chip{font-size:7px;padding:2px 5px;border-radius:3px;font-weight:700;}
 #map-wrap{flex:1;position:relative;}
 #map{width:100%;height:100%;}
 #right{width:360px;flex-shrink:0;border-left:1px solid #1a1a28;background:#0d0d15;overflow-y:auto;}
-#rpanel{padding:14px;}
-.empty-state{text-align:center;padding:50px 20px;color:#333;}
-.empty-icon{font-size:32px;margin-bottom:10px;}
-.empty-t{font-size:13px;color:#3a3a3a;margin-bottom:5px;}
-.empty-s{font-size:10px;color:#2a2a2a;}
-.pt{font-size:8px;letter-spacing:.25em;color:#333;text-transform:uppercase;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid #141420;}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px;}
-.met{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:10px;}
-.mlbl{font-size:8px;color:#3a3a3a;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px;}
-.mval{font-size:15px;font-weight:700;color:#00ff87;}
-.links{display:flex;gap:7px;margin-bottom:12px;}
-.lbtn{flex:1;background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:8px;text-align:center;color:#00c8ff;font-size:9px;text-decoration:none;letter-spacing:.1em;display:block;cursor:pointer;}
+#rpanel{padding:12px;}
+.empty-state{text-align:center;padding:40px 16px;color:#333;}
+.empty-icon{font-size:28px;margin-bottom:8px;}
+.empty-t{font-size:12px;color:#3a3a3a;margin-bottom:4px;}
+.empty-s{font-size:9px;color:#2a2a2a;}
+.pt{font-size:8px;letter-spacing:.2em;color:#333;text-transform:uppercase;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #141420;}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.met{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:9px;}
+.mlbl{font-size:7px;color:#3a3a3a;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+.mval{font-size:14px;font-weight:700;color:#00ff87;}
+.links{display:flex;gap:6px;margin-bottom:10px;}
+.lbtn{flex:1;background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:7px;text-align:center;color:#00c8ff;font-size:8px;text-decoration:none;letter-spacing:.08em;display:block;cursor:pointer;}
 .lbtn.gold{color:#ffb400;}
-.jbox{background:#111118;border:1px solid #1e1e2e;border-radius:5px;padding:12px;margin-bottom:10px;}
-.jgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px;}
-.fg label{font-size:8px;color:#444;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:3px;}
-.abtn{width:100%;border:none;border-radius:4px;padding:10px;font-size:10px;font-family:inherit;font-weight:700;letter-spacing:.12em;cursor:pointer;margin-bottom:7px;}
+.jbox{background:#111118;border:1px solid #1e1e2e;border-radius:5px;padding:10px;margin-bottom:8px;}
+.jgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;}
+.fg label{font-size:7px;color:#444;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:2px;}
+.abtn{width:100%;border:none;border-radius:4px;padding:9px;font-size:9px;font-family:inherit;font-weight:700;letter-spacing:.12em;cursor:pointer;margin-bottom:6px;}
 .abtn-p{background:linear-gradient(135deg,#00ff87,#00c8ff);color:#000;}
 .abtn-s{background:transparent;border:1px solid #1e1e2e;color:#555;}
-.abtn:hover:not(:disabled){opacity:.85;}
-.atitle{font-size:8px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px;}
+.abtn:hover{opacity:.85;}
+.atitle{font-size:8px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px;}
 .atext{font-size:10px;color:#666;line-height:1.8;}
 .aitem{font-size:10px;color:#666;line-height:1.8;}
-.lettre{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:12px;font-size:10px;line-height:1.9;color:#777;white-space:pre-wrap;margin-bottom:8px;}
-.cbtn{background:transparent;border:1px solid #1e1e2e;color:#555;border-radius:3px;padding:5px 10px;font-size:9px;cursor:pointer;font-family:inherit;margin-right:6px;}
-.sbtn{background:transparent;border:1px solid #00ff8733;color:#00ff87;border-radius:3px;padding:5px 10px;font-size:9px;cursor:pointer;font-family:inherit;}
-.vbuy{background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.2);color:#00ff87;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
-.vwatch{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.2);color:#ffb400;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
-.vpass{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);color:#ff4444;padding:4px 10px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.15em;display:inline-block;}
-#prospects{display:none;overflow-y:auto;flex:1;padding:20px;max-width:900px;margin:0 auto;width:100%;}
-.pc{background:#0d0d15;border:1px solid #1a1a28;border-radius:7px;padding:14px;margin-bottom:10px;}
-.pc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;}
-.pc-a{font-size:13px;font-weight:500;color:#ddd;}
-.pc-m{font-size:9px;color:#444;margin-top:2px;}
-.delbtn{background:transparent;border:none;color:#222;cursor:pointer;font-size:13px;}
-.delbtn:hover{color:#ff4444;}
-details summary{font-size:10px;color:#444;cursor:pointer;padding:4px 0;user-select:none;}
-.spin{display:inline-block;width:14px;height:14px;border:2px solid #1e1e2e;border-top:2px solid #00ff87;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px;}
-@keyframes sp{to{transform:rotate(360deg)}}
-#sv-box{width:100%;height:150px;border-radius:4px;margin-bottom:10px;overflow:hidden;background:#111118;}
+.lettre{background:#111118;border:1px solid #1e1e2e;border-radius:4px;padding:10px;font-size:10px;line-height:1.9;color:#777;white-space:pre-wrap;margin-bottom:7px;}
+.cbtn{background:transparent;border:1px solid #1e1e2e;color:#555;border-radius:3px;padding:4px 9px;font-size:8px;cursor:pointer;font-family:inherit;margin-right:5px;}
+.sbtn{background:transparent;border:1px solid #00ff8733;color:#00ff87;border-radius:3px;padding:4px 9px;font-size:8px;cursor:pointer;font-family:inherit;}
+.vbuy{background:rgba(0,255,135,.08);border:1px solid rgba(0,255,135,.2);color:#00ff87;padding:3px 9px;border-radius:3px;font-size:8px;font-weight:700;letter-spacing:.12em;display:inline-block;}
+.vwatch{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.2);color:#ffb400;padding:3px 9px;border-radius:3px;font-size:8px;font-weight:700;letter-spacing:.12em;display:inline-block;}
+.vpass{background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.2);color:#ff4444;padding:3px 9px;border-radius:3px;font-size:8px;font-weight:700;letter-spacing:.12em;display:inline-block;}
+#sv-box{width:100%;height:140px;border-radius:4px;margin-bottom:8px;overflow:hidden;background:#111118;}
 #sv-box img{width:100%;height:100%;object-fit:cover;cursor:pointer;display:block;}
-.sv-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#333;cursor:pointer;flex-direction:column;gap:6px;}
+.sv-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#333;cursor:pointer;flex-direction:column;gap:4px;}
+#prospects{display:none;overflow-y:auto;flex:1;padding:16px;max-width:900px;margin:0 auto;width:100%;}
+.pc{background:#0d0d15;border:1px solid #1a1a28;border-radius:6px;padding:12px;margin-bottom:8px;}
+.pc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.pc-a{font-size:12px;font-weight:500;color:#ddd;}
+.pc-m{font-size:8px;color:#444;margin-top:2px;}
+.delbtn{background:transparent;border:none;color:#222;cursor:pointer;font-size:12px;}
+.delbtn:hover{color:#ff4444;}
+details summary{font-size:9px;color:#444;cursor:pointer;padding:3px 0;user-select:none;}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid #1e1e2e;border-top:2px solid #00ff87;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:5px;}
+@keyframes sp{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 <div id="app">
   <div id="nav">
-    <div><div class="logo">◈ QUANTUM IMMO</div><div class="logo-sub">SCANNER OFF-MARKET · QUÉBEC</div></div>
+    <div><div class="logo">◈ QUANTUM IMMO</div><div class="logo-sub">SCANNER OFF-MARKET · QUÉBEC · GOOGLE MAPS</div></div>
     <div class="tabs">
       <button class="tb on" onclick="goTab('scanner')">Scanner</button>
       <button class="tb" onclick="goTab('prospects')">Prospects <span id="pcnt"></span></button>
@@ -110,199 +111,438 @@ details summary{font-size:10px;color:#444;cursor:pointer;padding:4px 0;user-sele
           <option value="drummondville">Drummondville</option>
           <option value="troisrivieres">Trois-Rivières</option>
           <option value="stHyacinthe">Saint-Hyacinthe</option>
+          <option value="blainville">Blainville</option>
+          <option value="mirabel">Mirabel</option>
+          <option value="terrebonne">Terrebonne</option>
           <option value="victoriaville">Victoriaville</option>
-          <option value="rimouski">Rimouski</option>
           <option value="quebec">Québec (ville)</option>
         </select>
         <div class="row2">
-          <div><label class="lbl" style="margin-top:8px">Rayon</label>
-            <select id="radius-sel"><option value="800">800m</option><option value="1500" selected>1.5 km</option><option value="2500">2.5 km</option><option value="4000">4 km</option></select>
+          <div>
+            <label class="lbl" style="margin-top:7px">Rayon</label>
+            <select id="radius-sel">
+              <option value="1000">1 km</option>
+              <option value="2000" selected>2 km</option>
+              <option value="3000">3 km</option>
+              <option value="5000">5 km</option>
+            </select>
           </div>
-          <div><label class="lbl" style="margin-top:8px">Min. étages</label>
-            <select id="floors-sel"><option value="2" selected>2+</option><option value="3">3+</option><option value="4">4+</option></select>
+          <div>
+            <label class="lbl" style="margin-top:7px">Min. portes</label>
+            <select id="doors-sel">
+              <option value="0" selected>Tous</option>
+              <option value="6">6+</option>
+              <option value="12">12+</option>
+              <option value="20">20+</option>
+              <option value="30">30+</option>
+            </select>
           </div>
         </div>
-        <button class="scan-btn" id="sbtn" onclick="scan()">▶ Scanner la zone</button>
+        <button class="scan-btn" id="sbtn" onclick="scan()">▶ Scanner avec Google Maps</button>
       </div>
-      <div id="log">En attente du scan...</div>
-      <div id="blist"><div class="empty-state"><div class="empty-icon">🗺️</div><div class="empty-t">Sélectionne une ville</div><div class="empty-s">et clique Scanner</div></div></div>
+      <div id="log">En attente...</div>
+      <div id="progress-bar"><div id="progress-fill"></div></div>
+      <div id="blist">
+        <div class="empty-state">
+          <div class="empty-icon">🗺️</div>
+          <div class="empty-t">Sélectionne une ville</div>
+          <div class="empty-s">et clique Scanner</div>
+        </div>
+      </div>
     </div>
     <div id="map-wrap"><div id="map"></div></div>
-    <div id="right"><div id="rpanel"><div class="empty-state"><div class="empty-icon">🏢</div><div class="empty-t">Clique sur un immeuble</div><div class="empty-s">dans la liste ou sur la carte</div></div></div></div>
+    <div id="right">
+      <div id="rpanel">
+        <div class="empty-state">
+          <div class="empty-icon">🏢</div>
+          <div class="empty-t">Clique sur un immeuble</div>
+          <div class="empty-s">dans la liste ou sur la carte</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div id="prospects"></div>
 </div>
 
 <script>
 const KEY='AIzaSyCv2KXrBTHI9Ir5VYc6jqhkqZZprMamyoE';
-const CITIES={granby:{lat:45.3986,lon:-72.7311},sherbrooke:{lat:45.4042,lon:-71.8929},montreal:{lat:45.5231,lon:-73.5826},laval:{lat:45.6066,lon:-73.7124},longueuil:{lat:45.5312,lon:-73.5185},brossard:{lat:45.4584,lon:-73.4706},sjsr:{lat:45.3069,lon:-73.2632},drummondville:{lat:45.8836,lon:-72.4832},troisrivieres:{lat:46.3432,lon:-72.5459},stHyacinthe:{lat:45.6295,lon:-72.9597},victoriaville:{lat:46.0567,lon:-71.9742},rimouski:{lat:48.4516,lon:-68.5318},quebec:{lat:46.8139,lon:-71.2082}};
-let gmap,buildings=[],selB=null,prospects=[],markers=[];
+const CITIES={
+  granby:{lat:45.3986,lon:-72.7311},sherbrooke:{lat:45.4042,lon:-71.8929},
+  montreal:{lat:45.5231,lon:-73.5826},laval:{lat:45.6066,lon:-73.7124},
+  longueuil:{lat:45.5312,lon:-73.5185},brossard:{lat:45.4584,lon:-73.4706},
+  sjsr:{lat:45.3069,lon:-73.2632},drummondville:{lat:45.8836,lon:-72.4832},
+  troisrivieres:{lat:46.3432,lon:-72.5459},stHyacinthe:{lat:45.6295,lon:-72.9597},
+  blainville:{lat:45.6701,lon:-73.8821},mirabel:{lat:45.6501,lon:-74.0837},
+  terrebonne:{lat:45.7001,lon:-73.6437},victoriaville:{lat:46.0567,lon:-71.9742},
+  quebec:{lat:46.8139,lon:-71.2082}
+};
+
+let gmap, places=[], selP=null, prospects=[], markers=[];
 
 window.initMap=function(){
   gmap=new google.maps.Map(document.getElementById('map'),{
     center:{lat:45.3986,lng:-72.7311},zoom:14,
-    styles:[{elementType:'geometry',stylers:[{color:'#0a0a0f'}]},{elementType:'labels.text.fill',stylers:[{color:'#555'}]},{elementType:'labels.text.stroke',stylers:[{color:'#0a0a0f'}]},{featureType:'road',elementType:'geometry',stylers:[{color:'#1a1a28'}]},{featureType:'water',elementType:'geometry',stylers:[{color:'#111118'}]},{featureType:'poi',stylers:[{visibility:'off'}]},{featureType:'transit',stylers:[{visibility:'off'}]}],
+    styles:[
+      {elementType:'geometry',stylers:[{color:'#0d0d15'}]},
+      {elementType:'labels.text.fill',stylers:[{color:'#555'}]},
+      {elementType:'labels.text.stroke',stylers:[{color:'#0a0a0f'}]},
+      {featureType:'road',elementType:'geometry',stylers:[{color:'#1a1a28'}]},
+      {featureType:'road',elementType:'labels.text.fill',stylers:[{color:'#444'}]},
+      {featureType:'water',elementType:'geometry',stylers:[{color:'#111118'}]},
+      {featureType:'poi',stylers:[{visibility:'off'}]},
+      {featureType:'transit',stylers:[{visibility:'off'}]},
+      {featureType:'landscape',elementType:'geometry',stylers:[{color:'#0a0a0f'}]},
+    ],
     mapTypeControl:false,streetViewControl:false,fullscreenControl:false
   });
 };
 
-function onCity(){const v=document.getElementById('city-sel').value;const c=CITIES[v];if(c&&gmap){gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(14);}}
-function scoreB(b){const t=b.tags||{},l=parseInt(t['building:levels'])||0,y=parseInt(t.start_date||t['construction:date'])||0;let s=0;if(t.building==='apartments')s+=28;else if(t.building==='residential')s+=16;else if(t.building)s+=8;if(l>=5)s+=28;else if(l>=4)s+=22;else if(l>=3)s+=15;else if(l>=2)s+=8;if(y>0&&y<1975)s+=28;else if(y>0&&y<1990)s+=18;else if(y>0&&y<2005)s+=8;if(!t.name)s+=8;if(t['addr:housenumber'])s+=8;return Math.min(Math.max(s,5),100);}
-const scol=s=>s>=65?'#00ff87':s>=40?'#ffb400':'#666';
-const schip=s=>s>=65?`<span class="chip" style="background:rgba(0,255,135,.1);color:#00ff87;border:1px solid rgba(0,255,135,.2)">Fort</span>`:s>=40?`<span class="chip" style="background:rgba(255,180,0,.1);color:#ffb400;border:1px solid rgba(255,180,0,.2)">Moyen</span>`:`<span class="chip" style="background:rgba(80,80,80,.1);color:#555;border:1px solid #222">Faible</span>`;
-function baddr(b){const t=b.tags||{};const n=t['addr:housenumber']||'',s=t['addr:street']||'';return(n&&s)?`${n} ${s}`:s||`Bâtiment #${b.id}`;}
-function bmeta(b){const t=b.tags||{},p=[];if(t['building:levels'])p.push(`${t['building:levels']} étages`);if(t.start_date)p.push(t.start_date);return p.join(' · ')||t.building||'Bâtiment';}
+function onCity(){
+  const v=document.getElementById('city-sel').value;
+  const c=CITIES[v];
+  if(c&&gmap){gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(14);}
+}
+
+// Score a Google Places result
+function scorePlace(p){
+  let s=20; // base score
+  const name=(p.name||'').toLowerCase();
+  const types=p.types||[];
+
+  // Type signals
+  if(types.includes('lodging'))s+=20;
+  if(name.includes('appartement')||name.includes('apartment'))s+=25;
+  if(name.includes('logement')||name.includes('locatif'))s+=25;
+  if(name.includes('plex')||name.includes('multiplex'))s+=30;
+  if(name.includes('résidence')||name.includes('residence'))s+=20;
+  if(name.includes('immeuble'))s+=25;
+  if(name.includes('condo'))s+=15;
+  if(/\d+/.test(name))s+=10; // has numbers = likely address
+  if(p.userRatings>10)s+=5; // well known building
+  if(!p.rating)s+=5; // no rating = not a business = residential
+
+  return Math.min(Math.max(s,5),100);
+}
+
+const scol=s=>s>=65?'#00ff87':s>=40?'#ffb400':'#555';
+const schip=s=>s>=65
+  ?`<span class="chip" style="background:rgba(0,255,135,.12);color:#00ff87;border:1px solid rgba(0,255,135,.25)">Fort</span>`
+  :s>=40?`<span class="chip" style="background:rgba(255,180,0,.1);color:#ffb400;border:1px solid rgba(255,180,0,.2)">Moyen</span>`
+  :`<span class="chip" style="background:rgba(80,80,80,.1);color:#555;border:1px solid #1e1e2e">Faible</span>`;
+
 const fmt=n=>n==null?'—':Math.round(n).toLocaleString('fr-CA');
 const fmtP=n=>n==null?'—':n.toFixed(2)+'%';
+const setProgress=p=>{document.getElementById('progress-fill').style.width=p+'%';};
 
 async function scan(){
   const sel=document.getElementById('city-sel').value;
   const c=CITIES[sel];if(!c)return;
   const radius=document.getElementById('radius-sel').value;
-  const minF=document.getElementById('floors-sel').value;
+  const minDoors=parseInt(document.getElementById('doors-sel').value)||0;
+
   document.getElementById('sbtn').disabled=true;
-  log('⟳ Scan en cours — 15 à 30 sec...','info');
-  gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(14);
-  markers.forEach(m=>m.setMap(null));markers=[];buildings=[];renderList();
-  const query=`[out:json][timeout:35];(way["building"="apartments"](around:${radius},${c.lat},${c.lon});way["building"="residential"]["building:levels"~"^[${minF}-9]$|^[1-9][0-9]$"](around:${radius},${c.lat},${c.lon});way["building:levels"~"^[${minF}-9]$|^[1-9][0-9]$"]["building"~"apartments|residential|yes"](around:${radius},${c.lat},${c.lon}););out center tags 200;`;
-  const servers=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter','https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
-  let data=null;
-  for(const srv of servers){try{const r=await fetch(`${srv}?data=${encodeURIComponent(query)}`);if(r.ok){data=await r.json();break;}}catch(e){continue;}}
-  if(!data){log('✗ Erreur connexion — réessaie','err');document.getElementById('sbtn').disabled=false;return;}
-  buildings=(data.elements||[]).filter(b=>b.center||(b.lat&&b.lon)).map(b=>({...b,_score:scoreB(b)})).sort((a,b)=>b._score-a._score).slice(0,150);
-  if(!buildings.length){log('Aucun immeuble — essaie rayon plus grand','err');document.getElementById('sbtn').disabled=false;return;}
-  buildings.forEach((b,i)=>{
-    const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
-    const col=scol(b._score);
-    const m=new google.maps.Marker({position:{lat,lng},map:gmap,icon:{path:google.maps.SymbolPath.CIRCLE,scale:b._score>=65?9:6,fillColor:col,fillOpacity:.9,strokeColor:'#000',strokeWeight:1},title:baddr(b)});
-    m.addListener('click',()=>selectB(b));
-    markers.push(m);
-  });
-  renderList();
-  log(`✓ ${buildings.length} immeubles · ${buildings.filter(b=>b._score>=65).length} forts signaux`,'ok');
+  log('⟳ Scan Google Maps en cours...','info');
+  setProgress(10);
+  gmap.setCenter({lat:c.lat,lng:c.lon});gmap.setZoom(13);
+  markers.forEach(m=>m.setMap(null));markers=[];places=[];renderList();
+
+  try{
+    setProgress(30);
+    const resp=await fetch(`/api/scan?lat=${c.lat}&lng=${c.lon}&radius=${radius}`);
+    setProgress(70);
+
+    if(!resp.ok) throw new Error('API error '+resp.status);
+    const data=await resp.json();
+
+    places=(data.places||[])
+      .map(p=>({...p,_score:scorePlace(p)}))
+      .sort((a,b)=>b._score-a._score);
+
+    setProgress(90);
+
+    if(!places.length){
+      log('Aucun immeuble trouvé — essaie un autre rayon','err');
+      setProgress(0);
+      document.getElementById('sbtn').disabled=false;
+      return;
+    }
+
+    // Plot markers
+    places.forEach((p,i)=>{
+      const col=scol(p._score);
+      const size=p._score>=65?10:p._score>=40?7:5;
+      const m=new google.maps.Marker({
+        position:{lat:p.lat,lng:p.lng},
+        map:gmap,
+        icon:{
+          path:google.maps.SymbolPath.CIRCLE,
+          scale:size,
+          fillColor:col,
+          fillOpacity:.9,
+          strokeColor:'rgba(0,0,0,.5)',
+          strokeWeight:1
+        },
+        title:p.name||p.address,
+        zIndex:p._score
+      });
+      m.addListener('click',()=>selectP(p));
+      markers.push(m);
+    });
+
+    setProgress(100);
+    setTimeout(()=>setProgress(0),800);
+    renderList();
+    const forts=places.filter(p=>p._score>=65).length;
+    log(`✓ ${places.length} propriétés trouvées via Google · ${forts} forts signaux`,'ok');
+
+  }catch(e){
+    log(`✗ Erreur: ${e.message}`,'err');
+    setProgress(0);
+  }
   document.getElementById('sbtn').disabled=false;
 }
 
-function log(msg,type){const el=document.getElementById('log');el.textContent=msg;el.className=type==='ok'?'l-ok':type==='err'?'l-err':type==='info'?'l-info':'';}
+function log(msg,type){
+  const el=document.getElementById('log');
+  el.textContent=msg;
+  el.className=type==='ok'?'l-ok':type==='err'?'l-err':type==='info'?'l-info':'';
+}
 
 function renderList(){
   const el=document.getElementById('blist');
-  if(!buildings.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-t">Aucun résultat</div><div class="empty-s">Essaie un rayon plus grand</div></div>`;return;}
-  el.innerHTML=buildings.map((b,i)=>`<div class="bcard ${selB&&selB.id===b.id?'sel':''}" onclick="selectB(buildings[${i}])"><div class="baddr">${baddr(b)}</div><div class="bmeta">${bmeta(b)}</div><div class="bscore"><div class="bar"><div class="bar-fill" style="width:${b._score}%;background:${scol(b._score)}"></div></div><span class="sval" style="color:${scol(b._score)}">${b._score}%</span>${schip(b._score)}</div></div>`).join('');
-}
-
-function selectB(b){
-  selB=b;renderList();
-  const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
-  gmap.setCenter({lat,lng});gmap.setZoom(17);
-  renderRight(b);
-}
-
-function renderRight(b){
-  const addr=baddr(b),meta=bmeta(b),t=b.tags||{};
-  const lat=b.center?b.center.lat:b.lat,lng=b.center?b.center.lon:b.lon;
-  const svImg=`https://maps.googleapis.com/maps/api/streetview?size=640x150&location=${lat},${lng}&fov=90&key=${KEY}`;
-  const svLink=`https://www.google.com/maps?q=${lat},${lng}&layer=c`;
-  const jlrUrl=`https://www.jlr.ca/fr/recherche?q=${encodeURIComponent(addr)}`;
-  document.getElementById('rpanel').innerHTML=`<div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
-      <div style="flex:1;margin-right:8px;"><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">${addr}</div><div style="font-size:9px;color:#444;">${meta}</div></div>
-      <div style="text-align:right;flex-shrink:0;">${b._score>=65?'<div class="vbuy">FORT</div>':b._score>=40?'<div class="vwatch">MOYEN</div>':'<div style="font-size:9px;color:#333">FAIBLE</div>'}<div style="font-size:9px;color:#333;margin-top:4px;">Score <span style="color:#00ff87">${b._score}</span>/100</div></div>
-    </div>
-    <div id="sv-box"><img src="${svImg}" onclick="window.open('${svLink}','_blank')" onerror="this.parentNode.innerHTML='<div class=sv-ph onclick=window.open(\\\"${svLink}\\\",\\\"_blank\\\")>📷 Pas de Street View disponible<br><span style=font-size:9px;color:#2a2a2a>Cliquer pour ouvrir Google Maps</span></div>'"></div>
-    <div class="metrics">
-      <div class="met"><div class="mlbl">Étages</div><div class="mval">${t['building:levels']||'?'}</div></div>
-      <div class="met"><div class="mlbl">Construction</div><div class="mval" style="font-size:12px;">${t.start_date||'?'}</div></div>
-      <div class="met"><div class="mlbl">Type</div><div class="mval" style="font-size:11px;color:#00c8ff;">${t.building||'?'}</div></div>
-      <div class="met"><div class="mlbl">Score</div><div class="mval" style="color:${scol(b._score)}">${b._score}%</div></div>
-    </div>
-    <div class="links"><a href="${svLink}" target="_blank" class="lbtn">📷 Street View</a><a href="${jlrUrl}" target="_blank" class="lbtn gold">🔍 JLR</a></div>
-    <div class="jbox">
-      <div class="pt">Données JLR — 2 minutes</div>
-      <div class="jgrid">
-        <div class="fg"><label>Prix demandé ($)</label><input type="number" id="j-price" placeholder="ex: 850000"></div>
-        <div class="fg"><label>Éval. municipale ($)</label><input type="number" id="j-eval" placeholder="ex: 680000"></div>
-        <div class="fg"><label>Nombre de portes</label><input type="number" id="j-doors" placeholder="ex: 6"></div>
-        <div class="fg"><label>Revenu brut annuel ($)</label><input type="number" id="j-rev" placeholder="ex: 72000"></div>
-        <div class="fg"><label>Nom propriétaire</label><input type="text" id="j-owner" placeholder="ex: Jean Tremblay"></div>
-        <div class="fg"><label>Dernière transaction</label><input type="text" id="j-sale" placeholder="ex: 2019 · 620K$"></div>
+  if(!places.length){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📭</div><div class="empty-t">Aucun résultat</div><div class="empty-s">Essaie un rayon plus grand</div></div>`;
+    return;
+  }
+  el.innerHTML=places.map((p,i)=>`
+    <div class="bcard ${selP&&selP.id===p.id?'sel':''}" onclick="selectP(places[${i}])">
+      <div class="baddr">${p.name||p.address||'Immeuble'}</div>
+      <div class="bmeta">${p.address||''}</div>
+      <div class="bscore">
+        <div class="bar"><div class="bar-fill" style="width:${p._score}%;background:${scol(p._score)}"></div></div>
+        <span class="sval" style="color:${scol(p._score)}">${p._score}%</span>
+        ${schip(p._score)}
       </div>
-      <div class="fg"><label>Observations</label><input type="text" id="j-notes" placeholder="ex: 2 logements vacants..."></div>
+    </div>`).join('');
+}
+
+function selectP(p){
+  selP=p;renderList();
+  gmap.setCenter({lat:p.lat,lng:p.lng});gmap.setZoom(17);
+  renderRight(p);
+}
+
+function renderRight(p){
+  const svImg=`https://maps.googleapis.com/maps/api/streetview?size=640x140&location=${p.lat},${p.lng}&fov=90&pitch=10&key=${KEY}`;
+  const svLink=`https://www.google.com/maps?q=${p.lat},${p.lng}&layer=c`;
+  const jlrUrl=`https://www.jlr.ca/fr/recherche?q=${encodeURIComponent(p.address||p.name||'')}`;
+  const gmUrl=`https://www.google.com/maps/place/?q=place_id:${p.id}`;
+
+  document.getElementById('rpanel').innerHTML=`<div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+      <div style="flex:1;margin-right:8px;">
+        <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:2px;">${p.name||'Immeuble'}</div>
+        <div style="font-size:8px;color:#444;">${p.address||''}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        ${p._score>=65?'<div class="vbuy">FORT</div>':p._score>=40?'<div class="vwatch">MOYEN</div>':'<div style="font-size:8px;color:#333">FAIBLE</div>'}
+        <div style="font-size:8px;color:#333;margin-top:3px;">Score <span style="color:#00ff87">${p._score}</span>/100</div>
+      </div>
     </div>
+
+    <div id="sv-box">
+      <img src="${svImg}" alt="Street View"
+        onclick="window.open('${svLink}','_blank')"
+        onerror="this.parentNode.innerHTML='<div class=sv-ph onclick=window.open(\\\"${svLink}\\\",\\\"_blank\\\")>📷 Cliquer pour Street View Google Maps</div>'">
+    </div>
+
+    <div class="metrics">
+      <div class="met"><div class="mlbl">Source</div><div class="mval" style="font-size:10px;color:#00c8ff;">Google Maps</div></div>
+      <div class="met"><div class="mlbl">Score</div><div class="mval" style="color:${scol(p._score)}">${p._score}%</div></div>
+      <div class="met"><div class="mlbl">Coordonnées</div><div class="mval" style="font-size:9px;color:#444;">${p.lat.toFixed(4)}</div></div>
+      <div class="met"><div class="mlbl">Types</div><div class="mval" style="font-size:9px;color:#444;">${(p.types||[]).slice(0,2).join(', ')||'?'}</div></div>
+    </div>
+
+    <div class="links">
+      <a href="${svLink}" target="_blank" class="lbtn">📷 Street View</a>
+      <a href="${jlrUrl}" target="_blank" class="lbtn gold">🔍 JLR</a>
+      <a href="${gmUrl}" target="_blank" class="lbtn" style="color:#aaa">🗺 G-Maps</a>
+    </div>
+
+    <div class="jbox">
+      <div class="pt">Données JLR — 2 min</div>
+      <div class="jgrid">
+        <div class="fg"><label>Prix demandé ($)</label><input type="number" id="j-price" placeholder="2500000"></div>
+        <div class="fg"><label>Éval. municipale ($)</label><input type="number" id="j-eval" placeholder="1800000"></div>
+        <div class="fg"><label>Nombre de portes</label><input type="number" id="j-doors" placeholder="30"></div>
+        <div class="fg"><label>Revenu brut/an ($)</label><input type="number" id="j-rev" placeholder="270000"></div>
+        <div class="fg"><label>Nom propriétaire</label><input type="text" id="j-owner" placeholder="Jean Tremblay"></div>
+        <div class="fg"><label>Dernière vente</label><input type="text" id="j-sale" placeholder="2008 · 1.2M$"></div>
+      </div>
+      <div class="fg"><label>Observations</label><input type="text" id="j-notes" placeholder="Loyers sous-marché, détenu depuis 20 ans..."></div>
+    </div>
+
     <button class="abtn abtn-p" onclick="doAnalyze()">📊 Analyser le deal →</button>
-    <button class="abtn abtn-s" onclick="doLettre()">✉ Générer lettre d'approche</button>
+    <button class="abtn abtn-s" onclick="doLettre()">📞 Générer script d'approche</button>
     <div id="ares"></div>
   </div>`;
 }
 
 async function doAnalyze(){
-  if(!selB)return;
+  if(!selP)return;
   const g=id=>document.getElementById(id)?.value||'';
-  const addr=baddr(selB),t=selB.tags||{};
   const price=g('j-price'),eval_=g('j-eval'),doors=g('j-doors'),rev=g('j-rev'),owner=g('j-owner'),sale=g('j-sale'),notes=g('j-notes');
   const noi=rev?Math.round(parseFloat(rev)*0.65):null;
-  document.getElementById('ares').innerHTML=`<div style="text-align:center;padding:20px;"><span class="spin"></span><span style="font-size:10px;color:#444;">Analyse IA...</span></div>`;
-  const prompt=`Analyste immobilier expert Québec. JSON uniquement sans texte ni backticks.\nAdresse: ${addr}\nOSM: ${t['building:levels']||'?'} étages · ${t.start_date||'?'} · ${t.building||'?'}\nPrix: ${price||'?'}$ Éval: ${eval_||'?'}$ Portes: ${doors||'?'}\nRevenu brut: ${rev||'?'}$/an NOI: ${noi||'?'}$\nDernière vente: ${sale||'?'} Proprio: ${owner||'?'}\nNotes: ${notes||'aucune'}\n{"verdict":"ACHETER"|"SURVEILLER"|"PASSER","score":0-100,"prixParPorte":number|null,"tauxCap":number|null,"noi":number|null,"valeurRevenu":number|null,"ecart":number|null,"synthese":"string","forces":["",""],"risques":["",""],"optimisations":["","",""],"schl":"string","jlr":"string"}`;
+  document.getElementById('ares').innerHTML=`<div style="text-align:center;padding:18px;"><span class="spin"></span><span style="font-size:9px;color:#444;">Analyse IA...</span></div>`;
+
+  const prompt=`Analyste immobilier expert Québec, spécialiste SCHL MLI Select. JSON uniquement sans texte ni backticks.
+
+Propriété: ${selP.name||''} — ${selP.address||''}
+Prix: ${price||'?'}$  Éval. mun.: ${eval_||'?'}$  Portes: ${doors||'?'}
+Revenu brut: ${rev||'?'}$/an  NOI estimé: ${noi||'?'}$
+Dernière vente: ${sale||'?'}  Proprio: ${owner||'?'}
+Notes: ${notes||'aucune'}
+
+{"verdict":"ACHETER"|"SURVEILLER"|"PASSER","score":0-100,"prixParPorte":number|null,"tauxCap":number|null,"noi":number|null,"valeurRevenu":number|null,"ecart":number|null,"dscrEstime":number|null,"eligibleSCHL":true|false,"pointsMLI":number|null,"miseDefondsMLI":number|null,"synthese":"string","forces":["",""],"risques":["",""],"optimisations":["","",""],"schl":"conseil financement SCHL MLI Select spécifique avec chiffres","jlr":"quoi vérifier sur JLR"}`;
+
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
     const txt=d.content?.map(i=>i.text||'').join('')||'';
     const res=JSON.parse(txt.replace(/```json|```/g,'').trim());
-    selB._analysis=res;selB._jlr={price,eval_,doors,rev,owner,sale,notes};
+    selP._analysis=res;
+    selP._jlr={price,eval_,doors,rev,owner,sale,notes};
     showAnalysis(res);
-  }catch(e){document.getElementById('ares').innerHTML=`<div style="color:#ff6666;font-size:10px;padding:10px;">Erreur — réessaie</div>`;}
+  }catch(e){
+    document.getElementById('ares').innerHTML=`<div style="color:#ff6666;font-size:9px;padding:8px;">Erreur — réessaie</div>`;
+  }
 }
 
 function showAnalysis(r){
   const vc=r.verdict==='ACHETER'?'vbuy':r.verdict==='PASSER'?'vpass':'vwatch';
-  document.getElementById('ares').innerHTML=`<div style="border-top:1px solid #1e1e2e;padding-top:12px;margin-top:4px;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><div class="${vc}">${r.verdict}</div><div style="font-size:9px;color:#333;">Score <span style="color:#00ff87">${r.score}</span>/100</div></div>
-    <div class="metrics">${r.prixParPorte!=null?`<div class="met"><div class="mlbl">Prix/porte</div><div class="mval" style="font-size:13px;">${fmt(r.prixParPorte)}$</div></div>`:''} ${r.tauxCap!=null?`<div class="met"><div class="mlbl">Cap rate</div><div class="mval" style="color:${r.tauxCap>=5.5?'#00ff87':r.tauxCap>=4.5?'#ffb400':'#ff4444'}">${fmtP(r.tauxCap)}</div></div>`:''} ${r.noi!=null?`<div class="met"><div class="mlbl">NOI</div><div class="mval" style="color:#00c8ff;font-size:12px;">${fmt(r.noi)}$</div></div>`:''} ${r.ecart!=null?`<div class="met"><div class="mlbl">Écart</div><div class="mval" style="color:${r.ecart>0?'#00ff87':'#ff4444'};font-size:12px;">${r.ecart>0?'+':''}${fmt(r.ecart)}$</div></div>`:''}</div>
-    <div style="margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">Synthèse</div><div class="atext">${r.synthese}</div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-      <div><div class="atitle" style="color:#00ff87;">Forces</div>${(r.forces||[]).map(f=>`<div class="aitem"><span style="color:#00ff87">↑ </span>${f}</div>`).join('')}</div>
-      <div><div class="atitle" style="color:#ff4444;">Risques</div>${(r.risques||[]).map(f=>`<div class="aitem"><span style="color:#ff4444">⚠ </span>${f}</div>`).join('')}</div>
-    </div>
-    <div style="margin-bottom:10px;"><div class="atitle" style="color:#ffb400;">Optimisations</div>${(r.optimisations||[]).map(o=>`<div class="aitem"><span style="color:#ffb400">→ </span>${o}</div>`).join('')}</div>
-    ${r.schl?`<div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#00c8ff;">SCHL</div><div style="font-size:9px;color:#555;line-height:1.7;">${r.schl}</div></div>`:''}
-    <div style="background:#111118;border-radius:4px;padding:10px;margin-bottom:10px;"><div class="atitle" style="color:#444;">JLR</div><div style="font-size:9px;color:#444;line-height:1.7;">${r.jlr}</div></div>
-    <button class="abtn abtn-p" onclick="doLettre()">✉ Générer lettre →</button>
-  </div>`;
+  document.getElementById('ares').innerHTML=`
+    <div style="border-top:1px solid #1e1e2e;padding-top:10px;margin-top:4px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <div class="${vc}">${r.verdict}</div>
+        <div style="font-size:8px;color:#333;">Score <span style="color:#00ff87">${r.score}</span>/100</div>
+      </div>
+      <div class="metrics">
+        ${r.prixParPorte!=null?`<div class="met"><div class="mlbl">Prix/porte</div><div class="mval" style="font-size:12px;">${fmt(r.prixParPorte)}$</div></div>`:''}
+        ${r.tauxCap!=null?`<div class="met"><div class="mlbl">Cap rate</div><div class="mval" style="color:${r.tauxCap>=5.5?'#00ff87':r.tauxCap>=4.5?'#ffb400':'#ff4444'}">${fmtP(r.tauxCap)}</div></div>`:''}
+        ${r.noi!=null?`<div class="met"><div class="mlbl">NOI</div><div class="mval" style="color:#00c8ff;font-size:11px;">${fmt(r.noi)}$</div></div>`:''}
+        ${r.miseDefondsMLI!=null?`<div class="met"><div class="mlbl">Mise de fonds MLI</div><div class="mval" style="color:#8b5cf6;font-size:11px;">${fmt(r.miseDefondsMLI)}$</div></div>`:''}
+      </div>
+      ${r.eligibleSCHL!=null?`<div style="background:${r.eligibleSCHL?'rgba(0,255,135,.06)':'rgba(255,68,68,.06)'};border:1px solid ${r.eligibleSCHL?'rgba(0,255,135,.2)':'rgba(255,68,68,.2)'};border-radius:4px;padding:8px;margin-bottom:8px;font-size:9px;color:${r.eligibleSCHL?'#00ff87':'#ff4444'};">
+        ${r.eligibleSCHL?'✓ Potentiellement éligible SCHL MLI Select':'✗ Non éligible SCHL selon les données actuelles'}
+        ${r.pointsMLI!=null?` · ~${r.pointsMLI} points MLI estimés`:''}
+      </div>`:''}
+      <div style="margin-bottom:8px;"><div class="atitle" style="color:#00c8ff;">Synthèse</div><div class="atext">${r.synthese}</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <div><div class="atitle" style="color:#00ff87;">Forces</div>${(r.forces||[]).map(f=>`<div class="aitem"><span style="color:#00ff87">↑ </span>${f}</div>`).join('')}</div>
+        <div><div class="atitle" style="color:#ff4444;">Risques</div>${(r.risques||[]).map(f=>`<div class="aitem"><span style="color:#ff4444">⚠ </span>${f}</div>`).join('')}</div>
+      </div>
+      <div style="margin-bottom:8px;"><div class="atitle" style="color:#ffb400;">Optimisations</div>${(r.optimisations||[]).map(o=>`<div class="aitem"><span style="color:#ffb400">→ </span>${o}</div>`).join('')}</div>
+      ${r.schl?`<div style="background:#111118;border-radius:4px;padding:8px;margin-bottom:8px;"><div class="atitle" style="color:#8b5cf6;">SCHL MLI Select</div><div style="font-size:9px;color:#666;line-height:1.7;">${r.schl}</div></div>`:''}
+      <div style="background:#111118;border-radius:4px;padding:8px;margin-bottom:8px;"><div class="atitle" style="color:#444;">JLR</div><div style="font-size:9px;color:#444;line-height:1.7;">${r.jlr}</div></div>
+      <button class="abtn abtn-p" onclick="doLettre()">📞 Générer script d'approche →</button>
+    </div>`;
 }
 
 async function doLettre(){
-  if(!selB)return;
+  if(!selP)return;
   const g=id=>document.getElementById(id)?.value||'';
-  const addr=baddr(selB),t=selB.tags||{};
-  const owner=g('j-owner')||selB._jlr?.owner||'';
-  const doors=g('j-doors')||selB._jlr?.doors||'';
-  const notes=g('j-notes')||selB._jlr?.notes||'';
+  const owner=g('j-owner')||selP._jlr?.owner||'';
+  const doors=g('j-doors')||selP._jlr?.doors||'';
+  const notes=g('j-notes')||selP._jlr?.notes||'';
+  const analysis=selP._analysis;
+
   const ex=document.getElementById('lsec');if(ex)ex.remove();
-  document.getElementById('ares').insertAdjacentHTML('beforeend',`<div id="lsec"><div style="text-align:center;padding:14px;"><span class="spin"></span><span style="font-size:10px;color:#444;">Génération lettre...</span></div></div>`);
-  const prompt=`Investisseur immobilier professionnel québécois. UNIQUEMENT la lettre, rien d'autre.\nAdresse: ${addr} Proprio: ${owner||'?'}\nImmeuble: ${t['building:levels']||'?'} étages ${doors?'~'+doors+' portes':''} · ${t.start_date||'?'}\nNotes: ${notes||'immeuble repéré lors analyse de secteur'}\nRègles: 150-200 mots · chaleureux direct · pas de problèmes · acheteur sérieux · invitation discrète · signature Edgar · commence par "Bonjour${owner?' M./Mme '+owner.split(' ').slice(-1)[0]:''},\n\n"`;
+  document.getElementById('ares').insertAdjacentHTML('beforeend',`<div id="lsec"><div style="text-align:center;padding:12px;"><span class="spin"></span><span style="font-size:9px;color:#444;">Génération script...</span></div></div>`);
+
+  const prompt=`Tu es un investisseur immobilier professionnel québécois. Génère un script d'appel téléphonique court et naturel pour approcher le propriétaire de cet immeuble.
+
+Immeuble: ${selP.name||''} — ${selP.address||''}
+Propriétaire: ${owner||'inconnu'}
+Portes: ${doors||'?'} portes
+Notes: ${notes||'immeuble repéré lors d\'analyse de secteur'}
+Analyse: ${analysis?analysis.synthese:'potentiel identifié'}
+
+Le script doit:
+- Être naturel et conversationnel, pas corporatif
+- 150-200 mots maximum
+- Commencer par se présenter brièvement
+- Mentionner l'immeuble spécifique avec l'adresse
+- Exprimer un intérêt sérieux d'acheteur sans agent
+- Proposer une rencontre discrète sans pression
+- Ton direct et respectueux
+- Signature: Edgar Molesini
+- Format: script avec [PAUSE] et [SI OUI:] [SI NON:] pour les réponses possibles
+
+Retourne UNIQUEMENT le script.`;
+
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
-    const lettre=d.content?.map(i=>i.text||'').join('')||'';
-    selB._lettre=lettre;
-    document.getElementById('lsec').innerHTML=`<div style="border-top:1px solid #1e1e2e;padding-top:12px;margin-top:8px;"><div class="atitle" style="color:#00c8ff;">✉ Lettre d'approche</div><div class="lettre" id="ltxt">${lettre}</div><button class="cbtn" onclick="navigator.clipboard.writeText(document.getElementById('ltxt').textContent)">Copier</button><button class="sbtn" onclick="saveP()">Sauvegarder prospect</button></div>`;
-  }catch(e){document.getElementById('lsec').innerHTML=`<div style="color:#ff6666;font-size:10px;padding:8px;">Erreur — réessaie</div>`;}
+    const script=d.content?.map(i=>i.text||'').join('')||'';
+    selP._lettre=script;
+    document.getElementById('lsec').innerHTML=`
+      <div style="border-top:1px solid #1e1e2e;padding-top:10px;margin-top:6px;">
+        <div class="atitle" style="color:#00c8ff;">📞 Script d'approche téléphonique</div>
+        <div class="lettre" id="ltxt">${script}</div>
+        <button class="cbtn" onclick="navigator.clipboard.writeText(document.getElementById('ltxt').textContent)">Copier</button>
+        <button class="sbtn" onclick="saveP()">Sauvegarder prospect</button>
+      </div>`;
+  }catch(e){
+    document.getElementById('lsec').innerHTML=`<div style="color:#ff6666;font-size:9px;padding:6px;">Erreur — réessaie</div>`;
+  }
 }
 
 function saveP(){
-  if(!selB)return;
-  prospects=[{id:Date.now(),addr:baddr(selB),meta:bmeta(selB),score:selB._score,jlr:selB._jlr||{},analysis:selB._analysis||null,lettre:selB._lettre||'',date:new Date().toLocaleDateString('fr-CA')},...prospects];
+  if(!selP)return;
+  prospects=[{
+    id:Date.now(),
+    name:selP.name||'Immeuble',
+    addr:selP.address||'',
+    score:selP._score,
+    jlr:selP._jlr||{},
+    analysis:selP._analysis||null,
+    lettre:selP._lettre||'',
+    date:new Date().toLocaleDateString('fr-CA')
+  },...prospects];
   document.getElementById('pcnt').textContent=`(${prospects.length})`;
-  const b=document.querySelector('.sbtn');if(b){b.textContent='✓ Sauvegardé!';b.style.color='#00ff87';}
+  const b=document.querySelector('.sbtn');
+  if(b){b.textContent='✓ Sauvegardé!';b.style.color='#00ff87';}
 }
 
 function renderProspects(){
   const el=document.getElementById('prospects');
-  if(!prospects.length){el.innerHTML=`<div class="empty-state" style="padding:80px 0;"><div class="empty-icon">📋</div><div class="empty-t" style="font-size:14px;color:#3a3a3a;">Aucun prospect</div><div class="empty-s" style="font-size:11px;color:#2a2a2a;">Scanne et sauvegarde les meilleurs deals</div></div>`;return;}
-  el.innerHTML=prospects.map((p,i)=>`<div class="pc"><div class="pc-h"><div><div class="pc-a">${p.addr}</div><div class="pc-m">${p.meta} · ${p.date}</div></div><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:12px;font-weight:700;color:${scol(p.score)}">${p.score}%</span><button class="delbtn" onclick="delP(${i})">🗑</button></div></div>${p.jlr?.price?`<div style="font-size:10px;color:#555;margin-bottom:8px;">Prix: ${parseInt(p.jlr.price).toLocaleString('fr-CA')}$ · ${p.jlr.doors||'?'} portes · ${p.jlr.owner||'Proprio inconnu'}</div>`:''} ${p.analysis?`<div style="font-size:10px;color:#666;line-height:1.7;margin-bottom:8px;">${p.analysis.synthese}</div>`:''} ${p.lettre?`<details><summary>✉ Voir la lettre</summary><div class="lettre" style="margin-top:8px;font-size:10px;" id="lp${i}">${p.lettre}</div><button class="cbtn" style="margin-top:6px;" onclick="navigator.clipboard.writeText(document.getElementById('lp${i}').textContent)">Copier</button></details>`:''}</div>`).join('');
+  if(!prospects.length){
+    el.innerHTML=`<div class="empty-state" style="padding:60px 0;"><div class="empty-icon">📋</div><div class="empty-t" style="font-size:13px;color:#3a3a3a;">Aucun prospect sauvegardé</div></div>`;
+    return;
+  }
+  el.innerHTML=prospects.map((p,i)=>`
+    <div class="pc">
+      <div class="pc-h">
+        <div>
+          <div class="pc-a">${p.name}</div>
+          <div class="pc-m">${p.addr} · ${p.date}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:11px;font-weight:700;color:${scol(p.score)}">${p.score}%</span>
+          <button class="delbtn" onclick="delP(${i})">🗑</button>
+        </div>
+      </div>
+      ${p.jlr?.price?`<div style="font-size:9px;color:#555;margin-bottom:6px;">Prix: ${parseInt(p.jlr.price).toLocaleString('fr-CA')}$ · ${p.jlr.doors||'?'} portes · ${p.jlr.owner||'Proprio inconnu'}</div>`:''}
+      ${p.analysis?`<div style="font-size:9px;color:#666;line-height:1.7;margin-bottom:6px;">${p.analysis.synthese}</div>`:''}
+      ${p.lettre?`<details><summary>📞 Voir le script d'approche</summary><div class="lettre" style="margin-top:6px;font-size:9px;" id="lp${i}">${p.lettre}</div><button class="cbtn" style="margin-top:5px;" onclick="navigator.clipboard.writeText(document.getElementById('lp${i}').textContent)">Copier</button></details>`:''}
+    </div>`).join('');
 }
 
-function delP(i){prospects.splice(i,1);document.getElementById('pcnt').textContent=prospects.length?`(${prospects.length})`:'';renderProspects();}
+function delP(i){
+  prospects.splice(i,1);
+  document.getElementById('pcnt').textContent=prospects.length?`(${prospects.length})`:'';
+  renderProspects();
+}
 
 function goTab(t){
   document.querySelectorAll('.tb').forEach((b,i)=>b.classList.toggle('on',['scanner','prospects'][i]===t));
